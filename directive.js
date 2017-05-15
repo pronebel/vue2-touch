@@ -12,15 +12,15 @@ var directions = {
 function capitalize (str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
-var evt = null
-var handler = null
-var evtType = ''
 
 const touchs = {
   bind: function(el, binding) {
-    if (!evt) {
-      evt = new Hammer.Manager(el)
+    var handler = null;
+    var evtType = '';
+    if (!el.evt) {
+      el.evt = new Hammer.Manager(el)
     }
+    let evt = el.evt;
     var type = evtType = binding.arg.toLowerCase()
     var index = -1
     gestures.findIndex(function(gst, idx){
@@ -56,9 +56,9 @@ const touchs = {
       })
     }
   },
-  unbind: function() {
-    evt.destroy()
-    evt = null
+  unbind: function(el) {
+    el.evt.destroy()
+    el.evt = null
   }
 }
 export default touchs
